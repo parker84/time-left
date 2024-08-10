@@ -59,7 +59,8 @@ with st.expander('Time Left in Quarter ⏳', expanded=True):
             values='Percentage', 
             names='Name', 
             title='Percentage Left',
-            category_orders={'Name': ['Days Passed', 'Days Left']}
+            category_orders={'Name': ['Days Passed', 'Days Left']},
+            hole=0.5
         )
         st.plotly_chart(p, use_container_width=True)
 
