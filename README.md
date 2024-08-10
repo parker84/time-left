@@ -3,4 +3,4 @@ Streamlit app that will track how many days are left and what % complete the mon
 
 The App: https://timeleft.streamlit.app/
 
-<img width="965" alt="image" src="https://github.com/user-attachments/assets/09784cb7-1787-4092-9aea-7d689c8784d8">
+<img width="1013" alt="image" src="https://github.com/user-attachments/assets/d89fc194-02d5-4eca-b963-4a2d8f5bee6f">
