@@ -49,10 +49,18 @@ with st.expander('Time Left in Quarter ⏳', expanded=True):
             text='Days', 
             title='Days Left', 
             color='Name',
+            category_orders={'Name': ['Days Passed', 'Days Left']}
         )
+
         st.plotly_chart(p, use_container_width=True)
     with col2:
-        p = px.pie(df, values='Percentage', names='Name', title='Percentage Left')
+        p = px.pie(
+            df, 
+            values='Percentage', 
+            names='Name', 
+            title='Percentage Left',
+            category_orders={'Name': ['Days Passed', 'Days Left']}
+        )
         st.plotly_chart(p, use_container_width=True)
 
 with st.expander('Time Left in Year 📆', expanded=False):
