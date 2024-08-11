@@ -34,55 +34,59 @@ pct_of_year = days_from_start_of_year / days_in_year
 pct_left_in_quarter = days_left_in_quarter / days_in_quarter
 pct_left_in_year = days_left_in_year / days_in_year
 
-with st.expander('Time Left in Quarter ⏳', expanded=True):
+with st.expander('Time Left in Quarter 🪙', expanded=True):
     df = pd.DataFrame([])
     df['Days'] = [days_from_start_of_quarter, days_left_in_quarter]
     df['Name'] = ['Days Passed', 'Days Left']
     df['Percentage'] = [pct_of_quarter, pct_left_in_quarter]
+    df[' '] = ''
+    df['Days and Percent'] = df['Days'].astype(str) + ' days (' + (df['Percentage'] * 100).astype(int).astype(str) + '%)'
+    df['Days and Percent'] = [
+        str(round(pct_of_quarter * 100)) + '% done ✅ (' + str(days_from_start_of_quarter) + 'd)',
+        str(round(pct_left_in_quarter * 100)) + '% left ⏳ (' + str(days_left_in_quarter) + 'd)'
+    ]
 
-    col1, col2 = st.columns(2)
-    with col1:
-        p = px.bar(
-            df, 
-            x='Name', 
-            y='Days', 
-            text='Days', 
-            title='Days Left', 
-            color='Name',
-            category_orders={'Name': ['Days Passed', 'Days Left']}
-        )
+    p = px.bar(
+        df, 
+        y=' ', 
+        x='Percentage', 
+        text='Days and Percent', 
+        title='Time ⏳ Left in Quarter', 
+        color='Name',
+        category_orders={'Name': ['Days Passed', 'Days Left']},
+        orientation='h',
+        height=250
+    )
+    p.update_xaxes(tickvals=[0, 0.25, 0.5, 0.75, 1], tickformat=',.0%')
+    p.update_layout(barmode='stack', showlegend=False)
+    st.plotly_chart(p, use_container_width=True)
 
-        st.plotly_chart(p, use_container_width=True)
-    with col2:
-        p = px.pie(
-            df, 
-            values='Percentage', 
-            names='Name', 
-            title='Percentage Left',
-            category_orders={'Name': ['Days Passed', 'Days Left']},
-            hole=0.5
-        )
-        st.plotly_chart(p, use_container_width=True)
 
 with st.expander('Time Left in Year 📆', expanded=False):
     df = pd.DataFrame([])
     df['Days'] = [days_from_start_of_year, days_left_in_year]
     df['Name'] = ['Days Passed', 'Days Left']
     df['Percentage'] = [pct_of_year, pct_left_in_year]
+    df[' '] = ''
 
-    col1, col2 = st.columns(2)
-    with col1:
-        p = px.bar(
-            df, 
-            x='Name', 
-            y='Days', 
-            text='Days', 
-            title='Days Left', 
-            color='Name',
-        )
-        st.plotly_chart(p, use_container_width=True)
-    with col2:
-        p = px.pie(df, values='Percentage', names='Name', title='Percentage Left')
-        st.plotly_chart(p, use_container_width=True)
+    df['Days and Percent'] = [
+        str(round(pct_of_year * 100)) + '% done ✅ (' + str(days_from_start_of_year) + 'd)',
+        str(round(pct_left_in_year * 100)) + '% left ⏳ (' + str(days_left_in_year) + 'd)'
+    ]
+
+    p = px.bar(
+        df, 
+        y=' ', 
+        x='Percentage', 
+        text='Days and Percent', 
+        title='Time ⏳ Left in Year', 
+        color='Name',
+        category_orders={'Name': ['Days Passed', 'Days Left']},
+        orientation='h',
+        height=250
+    )
+    p.update_xaxes(tickvals=[0, 0.25, 0.5, 0.75, 1], tickformat=',.0%')
+    p.update_layout(barmode='stack', showlegend=False)
+    st.plotly_chart(p, use_container_width=True)
 
 st.caption(f"Today's date: `{todays_date}`, End of Quarter: `{end_of_quarter}`, End of Year: `{end_of_year}`")
