@@ -13,7 +13,10 @@ current_quarter = (todays_date.month - 1) // 3 + 1
 start_of_quarter = todays_date.replace(day=1, month=(current_quarter - 1) * 3 + 1)
 start_of_year = todays_date.replace(day=1, month=1)
 
-end_of_quarter = start_of_quarter.replace(day=1, month=start_of_quarter.month + 3) - timedelta(days=1)
+if current_quarter == 4:
+    end_of_quarter = start_of_quarter.replace(day=1, month=1, year=start_of_quarter.year + 1) - timedelta(days=1)
+else:
+    end_of_quarter = start_of_quarter.replace(day=1, month=start_of_quarter.month + 3) - timedelta(days=1)
 end_of_year = todays_date.replace(day=31, month=12)
 
 days_to_end_of_quarter = (end_of_quarter - todays_date).days
